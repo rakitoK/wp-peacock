@@ -21,8 +21,12 @@ class TitleModule extends SingletonModule implements FrontendModuleInterface
     public function generateTitleTag($queried_object, $siteName, $sep)
     {
         $objectTitle = '';
-        if ($queried_object instanceof WP_Post) {
-            $objectTitle = $queried_object->post_title;
+        if (is_null($queried_object)) {
+            $objectTitle = get_bloginfo('description');
+        } else {
+            if ($queried_object instanceof WP_Post) {
+                $objectTitle = $queried_object->post_title;
+            }
         }
 
         if ($objectTitle) {
@@ -48,7 +52,7 @@ class TitleModule extends SingletonModule implements FrontendModuleInterface
     public function filterTitleTag($title, $sep, $seplocation)
     {
         $queried_object = get_queried_object();
-        $siteName       = get_option('name');
+        $siteName       = get_bloginfo('name');
 
         $newTitleTag = $this->generateTitleTag($queried_object, $siteName, $sep, $seplocation);
         if (!empty($newTitleTag)) {
