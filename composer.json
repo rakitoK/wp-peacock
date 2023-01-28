@@ -1,0 +1,19 @@
+{
+    "name": "puleeno/wp-peacock",
+    "description": "Highlight your site in search results of Search Engines",
+    "type": "project",
+    "license": "GPL-3.0-only",
+    "autoload": {
+        "psr-4": {
+            "Peacock\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Puleeno Nguyen",
+            "email": "puleeno@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
