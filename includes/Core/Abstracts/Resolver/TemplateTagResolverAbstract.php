@@ -111,7 +111,7 @@ abstract class TemplateTagResolverAbstract implements TemplateTagResolverInterfa
      */
     public function getSep()
     {
-        return $this->sep;
+        return html_entity_decode($this->sep);
     }
 
     /**
@@ -120,5 +120,37 @@ abstract class TemplateTagResolverAbstract implements TemplateTagResolverInterfa
     public function getSiteName()
     {
         return $this->siteName;
+    }
+
+    public function resolveToken($token)
+    {
+        switch (trim($token)) {
+            case 'title':
+                return $this->getTitle();
+            case 'sep':
+            case 'separator':
+                return $this->getSep();
+            case 'site':
+            case 'site_name':
+                return $this->getSiteName();
+        }
+    }
+
+    public function resolve()
+    {
+        $tokens   = [];
+        $searches = [];
+        $replaces = [];
+
+        if (preg_match_all('/\{\%\s{1,}?([^%]+)\s{1,}?\%\}/', $this->getTemplate(), $matches)) {
+            $tokens = $matches[1];
+            $searches = $matches[0];
+
+            foreach ($tokens as $index => $token) {
+                $replaces[$index] = $this->resolveToken($token);
+            }
+        }
+
+        return str_replace($searches, $replaces, $this->getTemplate());
     }
 }
