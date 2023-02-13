@@ -9,6 +9,7 @@ use Peacock\Core\Interfaces\FrontendModuleInterface;
 use Peacock\Core\Interfaces\ModuleInterface;
 use Peacock\Core\Interfaces\RestModuleInterface;
 use Peacock\Core\Interfaces\SingletonModuleInterface;
+use Peacock\Modules\CanonicalModule;
 use Peacock\Modules\TitleModule;
 
 class ModuleManager
@@ -46,6 +47,7 @@ class ModuleManager
     private function registerDefaultModules()
     {
         $this->register(TitleModule::class);
+        $this->register(CanonicalModule::class);
     }
 
     /**
